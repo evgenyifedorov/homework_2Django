@@ -1,6 +1,5 @@
 asgiref==3.8.1
 asttokens==2.4.1
-black==24.4.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
 click==8.1.7
@@ -14,14 +13,8 @@ idna==3.7
 ipython==8.23.0
 jedi==0.19.1
 matplotlib-inline==0.1.7
-mypy-extensions==1.0.0
-packaging==24.0
 parso==0.8.4
-parts==1.7.0
-pathspec==0.12.1
 pillow==10.3.0
-platformdirs==4.2.0
-products==1.2.0
 prompt-toolkit==3.0.43
 psycopg2-binary==2.9.9
 pure-eval==0.2.2
