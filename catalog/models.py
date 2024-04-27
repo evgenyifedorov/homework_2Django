@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-
+# Create your models here.
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -24,15 +24,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-
-    product_name = models.CharField(
+    product_name  = models.CharField(
         max_length=100, verbose_name="Наименование", help_text="Наименование продукта"
     )
     description = models.TextField(
         verbose_name="Описание", **NULLABLE, help_text="Описание продукта"
     )
     image = models.ImageField(
-        upload_to="catalog/",
+        upload_to="products/",
         verbose_name="Изображение",
         help_text="Загрузите изображение",
         **NULLABLE,
@@ -43,11 +42,10 @@ class Product(models.Model):
         verbose_name="Категория",
         help_text="Введите категорию",
         **NULLABLE,
-        related_name="product",
+        related_name="products",
     )
     price = models.FloatField(
         verbose_name="Цена за покупку",
-        **NULLABLE,
     )
     created_at = models.DateTimeField(
         default=timezone.now, verbose_name="Дата создания"
