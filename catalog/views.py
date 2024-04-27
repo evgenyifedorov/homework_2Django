@@ -21,11 +21,11 @@ def contacts(request):
 
 def product(request):
     products = Product.objects.all()
-    context = {'products': products}
-    return render(request, 'product_list.html', context)
+    context = {"products": products}
+    return render(request, "product_list.html", context)
 
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    context = {'product': product}
-    return render(request, 'product_detail.html', context)
+    context = {"product": product}
+    return render(request, "product_detail.html", context)
