@@ -9,6 +9,11 @@ from bloging.models import Blog
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self, *args, **kwargs):
+        quereyset = super().get_queryset().order_by(*args, **kwargs)
+        quereyset = quereyset.filter(is_published=True)
+        return quereyset
+
 
 class BlogDetailView(DetailView):
     model = Blog
