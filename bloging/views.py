@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
@@ -10,9 +10,9 @@ class BlogListView(ListView):
     model = Blog
 
     def get_queryset(self, *args, **kwargs):
-        quereyset = super().get_queryset().order_by(*args, **kwargs)
-        quereyset = quereyset.filter(is_published=True)
-        return quereyset
+        queryset = super().get_queryset().order_by(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
 
 
 class BlogDetailView(DetailView):

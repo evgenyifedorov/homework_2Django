@@ -9,11 +9,11 @@ class Blog(models.Model):
     body = models.TextField(verbose_name='содержимое')
     image = models.ImageField(upload_to='blog', verbose_name='изображение', **NULLABLE)
     create_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
-    is_published = models.BooleanField(default=True, verbose_name='признак публикации')
+    is_published = models.BooleanField(default=True, verbose_name='признаки публикации')
     view_count = models.IntegerField(default=0, verbose_name='количество просмотров')
 
     def __str__(self):
-        return self.title
+        return f'{self.title}, {self.is_published}'
 
     class Meta:
         verbose_name = 'блог'

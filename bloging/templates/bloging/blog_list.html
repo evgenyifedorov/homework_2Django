@@ -25,12 +25,12 @@
                                class="btn btn-lg btn-block btn-outline-primary">Изменить</a>
                             <a href="{% url 'bloging:delete' object.pk %}" type="button"
                                class="btn btn-lg btn-block btn-outline-primary">Удалить</a>
-                             {% if object.is_published %}
+                            {% if object.is_published %}
                             <a href="{% url 'bloging:toogle_activity' object.pk %}" type="button"
-                               class="btn btn-lg btn-block btn-outline-primary">Активировать</a>
+                               class="btn btn-lg btn-block btn-outline-danger">снять с публикации</a>
                             {% else %}
                             <a href="{% url 'bloging:toogle_activity' object.pk %}" type="button"
-                               class="btn btn-lg btn-block btn-outline-danger">Деактивировать</a>
+                               class="btn btn-lg btn-block btn-outline-primary"">опубликовать</a>
                             {% endif %}
                         </div>
                     </div>
