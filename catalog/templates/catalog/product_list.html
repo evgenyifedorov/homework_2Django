@@ -4,11 +4,11 @@
 {% load my_tags %}
     <a href="{% url 'catalog:create' %}" type="button" class="btn btn-lg btn-block mb-5 btn-outline-primary">Добавить Продукт</a>
     <div class="row text-center">
-        {% for product in product_list %}
+        {% for product in object_list %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ product.product_name }}</h4>
                 </div>
                 <div class="card-body">
                     <img class="card-img-top" src="{{ product.image | media_filter }}">
@@ -19,11 +19,9 @@
                     <a href="{% url 'catalog:product_view' product.pk %}" type="button" class="btn btn-lg btn-block mb-1 btn-outline-primary">Подробнее</a>
                     <a href="{% url 'catalog:update' product.pk %}" type="button" class="btn btn-lg btn-block mb-1 btn-outline-warning">Редактировать</a>
                     <a href="{% url 'catalog:delete' product.pk %}" type="button" class="btn btn-lg btn-block btn-outline-danger">Удалить</a>
-                    {% for status in product.version.all %}
-                    <p> Активная версия:<strong> {{ status.name_version }} </strong> </p>
-                    <p> Номер версии:<strong> {{ status.number_version }} </strong> </p>
-                    {% endfor %}
+
                 </div>
+                <p>Активная версия: <strong>{{ product.active_version }}</strong></p>
             </div>
         </div>
         {% endfor %}

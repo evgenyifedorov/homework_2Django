@@ -12,6 +12,21 @@ from catalog.models import Product, Version
 class HomeListView(ListView):
     model = Product
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        products = Product.objects.all()
+
+        for product in products:
+            versions = Version.objects.filter(product=product)
+            active_versions = versions.filter(version_flag=True)
+            if active_versions:
+                product.active_version = active_versions.last().name_version
+            else:
+                product.active_version = 'Нет активной версии'
+
+        context_data['object_list'] = products
+        return context_data
+
 
 class ContactsTemplateView(TemplateView):
     template_name = "catalog/contacts.html"
@@ -46,6 +61,14 @@ class ProductCreateView(CreateView):
         else:
             context_data['formset'] = VersionFormset()
         return context_data
+
+    def form_valid(self, form):
+        formset = self.get_context_data()['formset']
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):

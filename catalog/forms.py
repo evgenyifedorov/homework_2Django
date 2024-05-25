@@ -9,8 +9,8 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         model = Product
         fields = '__all__'
 
-    def clean_name(self):
-        cleaned_data = self.cleaned_data.get('name')
+    def clean_product_name(self):
+        cleaned_data = self.cleaned_data.get('product_name')
         words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
         for word in words:
             if word in cleaned_data:
