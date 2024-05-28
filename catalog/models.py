@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from users.models import User
 
 # Create your models here.
 NULLABLE = {"blank": True, "null": True}
@@ -53,6 +54,9 @@ class Product(models.Model):
     updated_at = models.DateTimeField(
         default=timezone.now, verbose_name="Дата последнего изменения"
     )
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, verbose_name="Создан пользователем", **NULLABLE
+    )
 
     # manufactured_at = models.DateField(verbose_name='Дата производства продукта', **NULLABLE)
 
@@ -66,23 +70,22 @@ class Product(models.Model):
 
 
 class Version(models.Model):
-    product = models.ForeignKey(to=Product,
-                                on_delete=models.CASCADE,
-                                verbose_name="Продукт",
-                                related_name='version')
+    product = models.ForeignKey(
+        to=Product,
+        on_delete=models.CASCADE,
+        verbose_name="Продукт",
+        related_name="version",
+    )
 
-    number_version = models.IntegerField(default=1,
-                                         verbose_name="номер версии")
+    number_version = models.IntegerField(default=1, verbose_name="номер версии")
 
-    name_version = models.CharField(max_length=150,
-                                    verbose_name="имя версии")
+    name_version = models.CharField(max_length=150, verbose_name="имя версии")
 
-    version_flag = models.BooleanField(default=False,
-                                       verbose_name="признак версии")
+    version_flag = models.BooleanField(default=False, verbose_name="признак версии")
 
     class Meta:
         verbose_name = "версия продукта"
         verbose_name_plural = "версии продуктов"
 
         def __str__(self):
-            return f'{self.name_version}'
+            return f"{self.name_version}"
