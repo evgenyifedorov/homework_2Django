@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import (
@@ -12,7 +13,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 
 from catalog.models import Product, Version
 
@@ -20,6 +21,7 @@ from catalog.models import Product, Version
 # Create your views here.
 class HomeListView(ListView):
     model = Product
+    template_name = "catalog/product_list.html"
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
@@ -114,6 +116,18 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             return self.render_to_response(
                 self.get_context_data(form=form, formset=formset)
             )
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.user or user.is_superuser:
+            return ProductForm
+        if (
+            user.has_perm("catalog.set_published_status")
+            and user.has_perm("catalog.change_description")
+            and user.has_perm("catalog.change_category")
+        ):
+            return ModeratorProductForm
+        raise PermissionDenied
 
 
 class ProductDeleteView(DeleteView):

@@ -58,6 +58,8 @@ class Product(models.Model):
         User, on_delete=models.SET_NULL, verbose_name="Создан пользователем", **NULLABLE
     )
 
+    is_published = models.BooleanField(default=False, verbose_name="призанк публикации")
+
     # manufactured_at = models.DateField(verbose_name='Дата производства продукта', **NULLABLE)
 
     def __str__(self):
@@ -67,6 +69,11 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         ordering = ["product_name", "category"]
+        permissions = [
+            ("set_published_status", "Can publish product"),
+            ("change_description", "Can change product description"),
+            ("change_category", "Can change product category"),
+        ]
 
 
 class Version(models.Model):
