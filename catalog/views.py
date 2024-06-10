@@ -15,7 +15,8 @@ from django.forms import inlineformset_factory
 
 from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 
-from catalog.models import Product, Version
+from catalog.models import Product, Version, Category
+from catalog.services import get_products_from_cache, get_categories_from_cache
 
 
 # Create your views here.
@@ -38,6 +39,9 @@ class HomeListView(ListView):
 
         context_data["object_list"] = products
         return context_data
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 
 class ContactsTemplateView(TemplateView):
@@ -133,3 +137,17 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:home")
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    model = Category
+    template_name = "catalog/category_list.html"
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        context_data['category_list'] = categories
+        return context_data
+
+    def get_queryset(self):
+        return get_categories_from_cache()

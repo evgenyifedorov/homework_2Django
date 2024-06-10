@@ -5,6 +5,8 @@
 {% if user.is_authenticated %}
 <a href="{% url 'catalog:create' %}" type="button" class="btn btn-lg btn-block mb-5 btn-outline-primary">Добавить
     Продукт</a>
+<a href="{% url 'catalog:category_list' %}" type="button" class="btn btn-lg btn-block mb-5 btn-outline-primary">
+    Категории</a>
 {% endif %}
 <div class="row text-center">
     {% for product in object_list %}

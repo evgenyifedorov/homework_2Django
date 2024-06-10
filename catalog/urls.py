@@ -9,6 +9,7 @@ from catalog.views import (
     ProductDeleteView,
     ProductCreateView,
     ProductUpdateView,
+    CategoryListView,
 )
 
 app_name = CatalogConfig.name
@@ -20,4 +21,5 @@ urlpatterns = [
     path("delete/<int:pk>/", ProductDeleteView.as_view(), name="delete"),
     path("create/", ProductCreateView.as_view(), name="create"),
     path("update/<int:pk>/", ProductUpdateView.as_view(), name="update"),
+    path("categories/", CategoryListView.as_view(), name="category_list"),
 ]
